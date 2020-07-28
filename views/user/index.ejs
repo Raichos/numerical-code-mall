@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+
+    <title>网上购物系统</title>
+    <link rel="stylesheet" href="/bootstrap-3.3.4/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/sub-menu.css">
+    <!--使IE6、7、8版本（IE9以下版本）浏览器兼容html5新增的标签-->
+    <!--使IE6、7、8版本浏览器兼容css3样式-->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.js"></script>
+    <script src="/js/respond.min.js"></script>
+
+    <![endif]-->
+    <style>
+        .container {
+            background: cornsilk;
+        }
+
+        .carousel {
+            position: relative;
+            width: auto;
+            display: inline-block;
+        }
+
+        .carousel-inner > .item > img {
+            width: 100%;
+        }
+
+        .row.row-goods {
+            margin: 30px 0;
+        }
+
+        .row.row-goods img {
+            width: 100%;
+        }
+
+        .col-md-12.title {
+            height: 60px;
+            text-align: center;
+            line-height: 60px;
+            font-size: 28px;
+            font-family: "微软雅黑";
+        }
+
+        .border {
+            background: url("/images/border.png") no-repeat;
+            height: 12px;
+        }
+
+        .bor-l {
+            padding: 0 0 0 12px;
+            background-position: 0 0;
+        }
+
+        .bor-r {
+            padding: 0 12px 0 0;
+            background-position: right -24px;
+        }
+
+        .bor-m {
+            background: url("/images/border.png");
+            height: 12px;
+            background-position: -12px -12px;
+        }
+
+        .k-border {
+            padding-top: 24px;
+        }
+
+        ul.list-group.list-group-2 {
+            width: 83%;
+            text-align: right;
+        }
+
+        ul.list-group.list-group-2 li {
+            background: none;
+        }
+
+        ul.list-group.list-group-2 li img {
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+<!--顶部导航-->
+<div id="top-part"></div>
+<div id="search-part"></div>
+<!-- Static navbar -->
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">商城</span>
+            </button>
+            <a class="navbar-brand" href="/user/index">数码商城</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/user/index">首页</a></li>
+                <li><a href="/user/order">我的订单</a></li>
+                <li><a href="/user/userinfo">个人中心</a></li>
+                <li><a href="/user/collectGoods">商品收藏</a></li>
+                <li>
+                    <div class="input-group" style="width: 400px;margin-top: 10px;margin-left:20px;height: 30px;">
+                        <input type="text" class="form-control" id="searchCommodity" autofocus
+                               placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-danger"
+                                    onclick="javascript:window.location.href='/user/search/searchGoods/'+$('#searchCommodity').val();"
+                                    type="button">搜索</button>
+                        </span>
+                    </div>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right hidden-sm">
+                <%
+                if (user){
+                %>
+                    <li style="padding-top: 15px"><span class="label label-default" style="margin-right: 10px;height: 23px;"><%=user['user_name']%></span></li>
+                    <li><img src="/img/touxiang/raicho.jpg" style="width: 30px;height: 30px;margin-top: 10px"></li>
+                    <li><a href="/user/login/logout">退出</a></li>
+                <%
+                }
+                else {
+                %>
+                    <li><a href="/user/login">登录</a></li>
+                        <li><a href="/user/register">注册</a></li>
+                <%
+                }
+                %>
+                <li>
+                    <a href="/user/cart"><span class="glyphicon glyphicon-shopping-cart">购物车</span></a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+<!--主体内容-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" style="height: 43px;background: #f66060">
+        </div>
+    </div>
+    <!--二级菜单、图片轮播-->
+    <div class="row">
+        <div class="col-md-3">
+            <div class="toptitle">
+                <a href="sortgoods.html" style="padding-left:30px ;color:#fff;">全部商品分类</a>
+            </div>
+            <ul class="topmenu" id="topmenu">
+                <li><a href="/user/search/searchClassify/手机-配件-回收">手机、配件、回收</a>
+                    <div class="submenu">
+                        <div class="leftdiv">
+                            <dl>
+                                <dt><a href="#">华为手机</a></dt>
+                                <dd>
+                                    <a href="#">华为p40 pro</a> <a href="#">华为p30 128g/256g</a> <a href="#">mete40</a> <a
+                                            href="#">mete30 pro</a>
+                                    <a href="#">华为nova7 pro</a> <a href="#">华为nova7</a> <a href="#">华为nova6 pro</a> <a
+                                            href="#">华为nova6</a> <a
+                                            href="#">华为p40 pro</a> <a href="#">华为p40 pro/华为p40 pro</a> <a href="#">华为p40
+                                        pro</a> <a href="#">华为p40 pro</a>
+                                    <a href="#">华为p40 pro</a> <a href="#">华为p40 pro</a> <a href="#">华为p40 pro</a> <a
+                                            href="#">华为p40 pro</a> <a
+                                            href="#">华为p40 pro</a> <a href="#">华为p40 pro</a> <a href="#">华为p40 pro</a>
+                                    <a href="#">华为p40 pro</a>
+                                    <a href="#">华为p40 pro</a> <a href="#">华为p40 pro</a> <a href="#">华为p40 pro</a> <a
+                                            href="#">华为p40 pro</a>
+                                    <a href="#">华为p40 pro</a> <a href="#">华为p40 pro</a> <a href="#">华为p40 pro/华为p40
+                                        pro</a> <a href="#">华为p40 pro</a>
+                                    <a href="#">华为p40 pro</a> <a href="#">华为p40 pro</a> <a href="#">华为p40 pro</a> <a
+                                            href="#">华为p40 pro/华为p40 pro</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><a href="#">小米手机</a></dt>
+                                <dd>
+                                    <a href="#">小米10 pro</a> <a href="#">小米10</a> <a href="#">小米10青春版</a> <a href="#">小米9</a>
+                                    <a href="#">小米CC9 pro</a> <a href="#">小米9SE</a> <a href="#">小米MIX2</a> <a href="#">小米9pro/小米9</a>
+                                    <a
+                                            href="#">红米k30 pro</a> <a href="#">红米k30</a> <a href="#">红米7 note</a> <a
+                                            href="#">红米7</a> <a href="#">
+                                        小米MIX AIpha</a> <a href="#">小米MIX AIpha</a> <a href="#">小米MIX AIpha</a> <a
+                                            href="#">小米MIX AIpha</a> <a href="#">小米MIX AIpha</a>
+                                    <a href="#">小米MIX AIpha</a> <a href="#">小米MIX AIpha</a> <a href="#">小米MIX AIpha</a>
+                                    <a href="#">小米MIX AIpha</a>
+                                    <a href="#">小米MIX AIpha/小米MIX AIpha</a> <a href="#">小米MIX AIpha</a> <a href="#">小米MIX
+                                        AIpha/小米MIX AIpha</a> <a href="#">小米MIX AIpha/小米MIX AIpha</a>
+                                    <a href="#">小米MIX AIpha</a> <a href="#">小米MIX AIpha</a> <a href="#">小米MIX AIpha</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><a href="#">vivo手机</a></dt>
+                                <dd>
+                                    <a href="#">vivo S6</a> <a href="#">vivo Z6/vivo Z5</a> <a href="#">vivo X50</a> <a
+                                            href="#">vivo NEX 3S</a>
+                                    <a href="#">vivo X30</a> <a href="#">vivo X30</a> <a href="#">vivo X30</a> <a
+                                            href="#">vivo X30</a>
+                                    <a href="#">vivo X30</a> <a href="#">vivo X30/vivo X30</a> <a href="#">vivo X30</a>
+                                    <a href="#">vivo X30</a>
+                                    <a href="#">vivo X30/vivo X30</a> <a href="#">vivo X30</a> <a href="#">vivo X30</a>
+                                    <a href="#">vivo X30</a>
+                                    <a href="#">vivo X30</a> <a href="#">vivo X30</a> <a href="#">vivo X30</a> <a
+                                            href="#">vivo X30</a>
+                                    <a href="#">vivo X30</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><a href="#">手机配件</a></dt>
+                                <dd>
+                                    <a href="#">手机电池</a> <a href="#">手机后盖板/手机屏幕</a> <a href="#">手机按钮</a> <a href="#">手机摄像头</a>
+                                    <a href="#">手机处理器</a> <a href="#">手机电容</a> <a href="#">手机壳</a> <a href="#">手机套</a>
+                                    <a href="#">手机钢化膜</a> <a href="#">手机钢化膜</a> <a href="#">手机钢化膜</a> <a
+                                            href="#">手机钢化膜</a>
+                                    <a href="#">手机钢化膜</a> <a href="#">手机钢化膜</a> <a href="#">手机钢化膜</a> <a
+                                            href="#">手机钢化膜</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><a href="#">二手手机</a></dt>
+                                <dd>
+                                    <a href="#">华为手机</a> <a href="#">vivo手机a> <a href="#">小米手机</a> <a
+                                                href="#">oppo手机</a>
+                                        <a href="#">锤子手机</a> <a href="#">三星手机</a> <a href="#">魅族手机</a> <a
+                                                href="#">联想手机</a>
+                                        <a href="#">中兴</a> <a href="#">华为手机</a> <a href="#">华为手机</a>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="/user/search/searchClassify/电脑-整机-组装机">电脑、整机、组装机</a>
+                    <div class="submenu">
+                        <div class="leftdiv">
+                            <dl>
+                                <dt><a href="#">整机</a></dt>
+                                <dd>
+                                    <a href="#">华硕</a> <a href="#">微星</a> <a href="#">戴尔</a> <a href="#">惠普</a>
+                                    <a href="#">七彩虹</a> <a href="#">华硕</a> <a href="#">华硕</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><a href="#">组装机配件</a></dt>
+                                <dd>
+                                    <a href="#">i9 1080k</a> <a href="#">amd 3600锐龙3代</a> <a href="#">i7 9800f</a> <a
+                                            href="#">i5 8000u</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><a href="#">电脑配件</a></dt>
+                                <dd>
+                                    <a href="#">cpu</a> <a href="#">主板</a> <a href="#">内存条</a> <a href="#">硬盘</a>
+                                    <a href="#">散热器</a> <a href="#">机箱</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><a href="#">笔记本</a></dt>
+                                <dd>
+                                    <a href="#">华为</a> <a href="#">小米</a> <a href="#">惠普</a> <a href="#">外星人</a> <a
+                                            href="#">戴尔</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><a href="#">电脑配件</a></dt>
+                                <dd>
+                                    <a href="#">cpu</a> <a href="#">主板</a> <a href="#">内存条</a> <a href="#">硬盘</a>
+                                    <a href="#">散热器</a> <a href="#">机箱</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><a href="#">电脑配件</a></dt>
+                                <dd>
+
+                                    <a href="#">cpu</a> <a href="#">主板</a> <a href="#">内存条</a> <a href="#">硬盘</a>
+                                    <a href="#">散热器</a> <a href="#">机箱</a>
+                                </dd>
+                            </dl>
+                            <dl class="fore7">
+                                <dt><a href="#">电脑配件</a></dt>
+                                <dd>
+                                    <a href="#">cpu</a> <a href="#">主板</a> <a href="#">内存条</a> <a href="#">硬盘</a>
+                                    <a href="#">散热器</a> <a href="#">机箱</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><a href="#">电脑配件</a></dt>
+                                <dd>
+                                    <a href="#">cpu</a> <a href="#">主板</a> <a href="#">内存条</a> <a href="#">硬盘</a>
+                                    <a href="#">散热器</a> <a href="#">机箱</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><a href="#">电脑配件</a></dt>
+                                <dd>
+                                    <a href="#">cpu</a> <a href="#">主板</a> <a href="#">内存条</a> <a href="#">硬盘</a>
+                                    <a href="#">散热器</a> <a href="#">机箱</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><a href="#">电脑配件</a></dt>
+                                <dd>
+                                    <a href="#">cpu</a> <a href="#">主板</a> <a href="#">内存条</a> <a href="#">硬盘</a>
+                                    <a href="#">散热器</a> <a href="#">机箱</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><a href="#">电脑配件</a></dt>
+                                <dd>
+                                    <a href="#">cpu</a> <a href="#">主板</a> <a href="#">内存条</a> <a href="#">硬盘</a>
+                                    <a href="#">散热器</a> <a href="#">机箱</a>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="/user/search/searchClassify/相机">相机</a>
+                    <div class="submenu">
+                        <div class="leftdiv">
+                            <dl>
+                                <dt><a href="#"> 摄像机</a></dt>
+                                <dd>
+                                    <a href="#">摄影机</a> <a href="#">摄影机</a> <a href="#">摄影机</a> <a href="#">摄影机</a>
+                                    <a href="#">摄影机</a> <a href="#">摄影机</a> <a href="#">摄影机</a> <a href="#">摄影机</a>
+                                    <a href="#">摄影机</a> <a href="#">摄影机</a> <a href="#">摄影机</a> <a href="#">摄影机</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><a href="#">摄像机</a></dt>
+                                <dd>
+                                    <a href="#">摄像机</a> <a href="#">摄像机</a> <a href="#">摄像机</a> <a href="#">摄像机</a>
+                                    <a href="#">摄像机</a> <a href="#">摄像机</a> <a href="#">摄像机</a> <a href="#">摄像机</a>
+                                    <a href="#">摄像机</a> <a href="#">摄像机</a> <a href="#">摄像机</a> <a href="#">摄像机</a>
+                                    <a href="#">摄像机</a> <a href="#">摄像机</a> <a href="#">摄像机</a> <a href="#">摄像机</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><a href="#">手机摄像机</a></dt>
+                                <dd>
+                                    <a href="#">手机摄像机</a> <a href="#">手机摄像机</a> <a href="#">手机摄像机</a> <a
+                                            href="#">手机摄像机</a>
+                                    <a href="#">手机摄像机</a> <a href="#">手机摄像机</a> <a href="#">手机摄像机</a> <a
+                                            href="#">手机摄像机</a>
+                                    <a href="#">手机摄像机</a> <a href="#">手机摄像机</a> <a href="#">手机摄像机</a> <a
+                                            href="#">手机摄像机</a>
+                                    <a href="#">手机摄像机</a> <a href="#">手机摄像机</a> <a href="#">手机摄像机</a> <a
+                                            href="#">手机摄像机</a>
+                                    <a href="#">手机摄像机</a> <a href="#">手机摄像机</a> <a href="#">手机摄像机</a> <a
+                                            href="#">手机摄像机</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><a href="#">电脑摄像机</a></dt>
+                                <dd>
+                                    <a href="#">电脑摄像机</a> <a href="#">电脑摄像机</a> <a href="#">电脑摄像机</a> <a
+                                            href="#">电脑摄像机</a>
+                                    <a href="#">电脑摄像机</a> <a href="#">电脑摄像机</a> <a href="#">电脑摄像机</a> <a
+                                            href="#">电脑摄像机</a>
+                                    <a href="#">电脑摄像机</a> <a href="#">电脑摄像机</a> <a href="#">电脑摄像机</a> <a
+                                            href="#">电脑摄像机</a>
+                                    <a href="#">电脑摄像机</a> <a href="#">电脑摄像机</a> <a href="#">电脑摄像机</a> <a
+                                            href="#">电脑摄像机</a>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="/user/search/searchClassify/笔记本">笔记本</a>
+                </li>
+                <li><a href="/user/search/searchClassify/智能手表">智能手表</a>
+                </li>
+                <li><a href="/user/search/searchClassify/耳机">耳机</a><span></span>
+                    <div class="submenu">
+                        <div class="leftdiv">
+                            <dl>
+                                <dt><a href="#">入耳式</a></dt>
+                                <dd>
+                                    <a href="#">入耳式</a> <a href="#">入耳式</a> <a href="#">入耳式</a> <a href="#">入耳式</a>
+                                    <a href="#">入耳式</a> <a href="#">入耳式</a> <a href="#">入耳式/入耳式</a> <a href="#">入耳式</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><a href="#">蓝牙耳机</a></dt>
+                                <dd>
+                                    <a href="#">蓝牙耳机</a> <a href="#">蓝牙耳机</a> <a href="#">蓝牙耳机</a> <a href="#">蓝牙耳机</a>
+                                    <a href="#">
+                                        蓝牙耳机</a> <a href="#">蓝牙耳机</a> <a href="#">蓝牙耳机</a> <a href="#">蓝牙耳机</a> <a
+                                            href="#">蓝牙耳机</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><a href="#">外设产品</a></dt>
+                                <dd>
+                                    <a href="#">鼠标</a> <a href="#">键盘</a> <a href="#">游戏设备</a> <a href="#">U盘</a> <a
+                                            href="#">移动硬盘</a> <a href="#">鼠标垫</a> <a href="#">摄像头</a> <a href="#">线缆</a>
+                                    <a href="#">电玩</a> <a href="#">手写板</a> <a href="#">外置盒</a> <a href="#">电脑工具</a>
+                                    <a href="#">电脑清洁</a> <a href="#">UPS</a> <a href="#">插座</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><a href="#">网络产品</a></dt>
+                                <dd>
+                                    <a href="#">路由器</a> <a href="#">网卡</a> <a href="#">交换机</a> <a href="#">网络存储</a>
+                                    <a href="#">4G/3G上网</a> <a href="#">网络盒子</a> <a href="#">网络配件</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><a href="#">办公打印</a></dt>
+                                <dd>
+                                    <a href="#">打印机</a> <a href="#">一体机</a> <a href="#">投影机</a> <a href="#">投影配件</a>
+                                    <a href="#">传真机</a> <a href="#">复合机</a> <a href="#">碎纸机</a> <a href="#">扫描仪</a>
+                                    <a href="#">墨盒</a> <a href="#">硒鼓</a> <a href="#">墨粉</a> <a href="#">色带</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><a href="#">办公文仪</a></dt>
+                                <dd>
+                                    <a href="#">办公文具</a> <a href="#">文件管理</a> <a href="#">笔类</a> <a href="#">纸类</a>
+                                    <a href="#">本册/便签</a> <a href="#">学生文具</a> <a href="#">财务用品</a> <a href="#">计算器</a>
+                                    <a href="#">激光笔</a> <a href="#">白板/封装</a> <a href="#">考勤机</a> <a
+                                            href="#">刻录碟片/附件</a>
+                                    <a href="#">点钞机</a> <a href="#">支付设备/POS机</a> <a href="#">安防监控</a> <a href="#">呼叫/会议设备</a>
+                                    <a href="#">保险柜</a> <a href="#">办公家具</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><a href="#">服务产品</a></dt>
+                                <dd>
+                                    <a href="#">上门服务</a> <a href="#">远程服务</a> <a href="#">电脑软件</a>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="#">外设产品/外设产品/外设产品</a>
+                </li>
+                <li><a href="#">外设产品</a>
+                </li>
+                <li><a href="#">运动户外/外设产品</a>
+                </li>
+                <li><a href="#">外设产品</a>
+                </li>
+                <li><a href="#">外设产品/外设产品</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <div id="carousel-explorer" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-explorer" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-explorer" data-slide-to="1"></li>
+                    <li data-target="#carousel-explorer" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <img src="/images/numerical/xiangji02.jpg" alt="...">
+                        <div class="carousel-caption">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="/images/numerical/huipu.jpg" alt="...">
+                        <div class="carousel-caption">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="/images/numerical/phone5.jpg" alt="...">
+                        <div class="carousel-caption">
+                        </div>
+                    </div>
+                </div>
+                <a class="left carousel-control" href="#carousel-explorer" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#carousel-explorer" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <ul class="list-group list-group-2">
+                <li class="list-group-item"><a href="#"><img src="/images/numerical/xiangji01.jpg" alt=""></a></li>
+                <li class="list-group-item"><a href="#"><img src="/images/numerical/wangyuanjing01.jpg" alt=""></a></li>
+            </ul>
+        </div>
+    </div>
+    <!--第三块，热卖商品-->
+    <div class="row row-goods">
+        <div class="col-md-12 title">
+            <div class="col-md-5 ">
+                <div class="k-border">
+                    <div class="border bor-l">
+                        <div class="border bor-r">
+                            <div class="bor-m"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 ">热卖商品</div>
+            <div class="col-md-5 ">
+                <div class="k-border">
+                    <div class="border bor-l">
+                        <div class="border bor-r">
+                            <div class="bor-m"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%
+        for (var i = 0; i < sellCountGoods.length; i++) {
+        %>
+            <div class="col-md-3" style="text-align: center">
+                <a href="/user/commodity/info/<%= sellCountGoods[i]['g_id'] %>"><img
+                            src="<%= sellCountGoods[i]['g_photo'] %>" alt="">
+
+                </a>
+                <span>
+                    商品名称：<%= sellCountGoods[i]['g_name'] %>
+                        <br>
+                    销量：<%= sellCountGoods[i]['g_sell_count'] %>件
+                        <br>
+                    价格：￥<%= sellCountGoods[i]['g_price'] %>元
+                    </span>
+            </div>
+        <%
+        }
+        %>
+        <!--<div class="col-md-3">
+            <img src="/images/numerical/phone2.jpg" alt="">
+        </div>
+        <div class="col-md-3">
+            <img src="/images/numerical/phone3.jpg" alt="">
+        </div>
+        <div class="col-md-3">
+            <img src="/images/numerical/phone3.jpg" alt="">
+        </div>-->
+    </div>
+    <!--第四块，最新商品-->
+    <div class="row row-goods">
+        <div class="col-md-12 title">
+            <div class="col-md-5 ">
+                <div class="k-border">
+                    <div class="border bor-l">
+                        <div class="border bor-r">
+                            <div class="bor-m"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 ">最新商品</div>
+            <div class="col-md-5 ">
+                <div class="k-border">
+                    <div class="border bor-l">
+                        <div class="border bor-r">
+                            <div class="bor-m"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%
+        for (var i = 0; i < newestGoods.length; i++) {
+        %>
+            <div class="col-md-3" style="text-align: center">
+                <a href="/user/commodity/info/<%= newestGoods[i]['g_id'] %>"><img
+                            src="<%= newestGoods[i]['g_photo'] %>" alt=""></a>
+                <span>
+                    商品名称：<%= newestGoods[i]['g_name'] %>
+                        <br>
+                    销量：<%= newestGoods[i]['g_sell_count'] %>件
+                        <br>
+                    价格：￥<%= newestGoods[i]['g_price'] %>元
+                    </span>
+            </div>
+        <%
+        }
+        %>
+        <!--<div class="col-md-3">
+            <img src="/images/numerical/phone2.jpg" alt="">
+        </div>
+        <div class="col-md-3">
+            <img src="/images/numerical/phone3.jpg" alt="">
+        </div>
+        <div class="col-md-3">
+            <img src="/images/numerical/phone1.jpg" alt="">
+        </div>-->
+    </div>
+    <!--第五块，特价商品-->
+    <div class="row row-goods">
+        <div class="col-md-12 title">
+            <div class="col-md-5 ">
+                <div class="k-border">
+                    <div class="border bor-l">
+                        <div class="border bor-r">
+                            <div class="bor-m"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 ">特价商品</div>
+            <div class="col-md-5 ">
+                <div class="k-border">
+                    <div class="border bor-l">
+                        <div class="border bor-r">
+                            <div class="bor-m"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%
+        for (var i = 0; i < specialOfferGoods.length; i++) {
+        %>
+            <div class="col-md-3" style="text-align: center">
+                <a href="/user/commodity/info/<%= specialOfferGoods[i]['g_id'] %>"><img
+                            src="<%= specialOfferGoods[i]['g_photo'] %>" alt=""></a>
+                <span>
+                    商品名称：<%= specialOfferGoods[i]['g_name'] %>
+                        <br>
+                    销量：<%= specialOfferGoods[i]['g_sell_count'] %>件
+                        <br>
+                    价格：￥<%= specialOfferGoods[i]['g_price'] %>元
+                    </span>
+            </div>
+        <%
+        }
+        %>
+        <!--<div class="col-md-3">
+            <img src="/images/numerical/phone2.jpg" alt="">
+        </div>
+        <div class="col-md-3">
+            <img src="/images/numerical/phone3.jpg" alt="">
+        </div>
+        <div class="col-md-3">
+            <img src="/images/numerical/phone1.jpg" alt="">
+        </div>-->
+    </div>
+</div>
+<footer>
+    <p class="pull-right"><a href="#top-part">回到顶部</a></p>
+</footer>
+</body>
+<script src="/jquery/jquery-1.11.0.min.js"></script>
+<script src="/bootstrap-3.3.4/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    window.onload = function () {
+        var Lis = document.getElementById("topmenu").getElementsByTagName("li");
+        for (i = 0; i < Lis.length; i++) {
+            Lis[i].onmouseover = function () {
+                this.className = "lihover";
+            }
+            Lis[i].onmouseout = function () {
+                this.className = "";
+            }
+        }
+    }
+</script>
+<script type="text/javascript">
+    $("#top-part").load("top-part.html");
+    $("#search-part").load("search-part.html");
+</script>
+<script>
+    //商品模糊搜索
+    function searchCommodity() {
+        var commodityName = $("#searchCommodity").val();
+
+        $.post("/user/search/searchGoods", {orderId: orderId}, function (data, status) {
+            // alert("data="+data);
+
+            window.location.href = "/user/order";
+        });
+
+    }
+</script>
+</html>

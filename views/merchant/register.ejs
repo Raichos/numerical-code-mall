@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>注册</title>
+    <!-- Custom Theme files -->
+    <link href="/css/merchant-register.css" rel="stylesheet" type="text/css" media="all"/>
+    <!-- Custom Theme files -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords"
+          content="Login form web template, Sign up Web Templates, Flat Web Templates, Login signup Responsive web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design"/>
+
+    <link rel="stylesheet" href="/bootstrap-3.3.4/dist/css/bootstrap.min.css">
+    <script src="/jquery/jquery-1.11.0.min.js"></script>
+    <script src="/bootstrap-3.3.4/dist/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="login">
+    <h2>Acced Form</h2>
+    <div class="login-top">
+        <h1>LOGIN FORM</h1>
+        <form method="post" id="tf" enctype="multipart/form-data" action="/merchant/register">
+            <input type="text" name="username">
+            <input type="password" name="password">
+
+            <div class="form-group">
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <input id='location' class="form-control" onclick="$('#i-file').click();">
+                        <label class="input-group-btn">
+                            <input type="button" id="i-check" value="浏览头像" class="btn btn-primary"
+                                   onclick="$('#i-file').click();">
+                        </label>
+                    </div>
+                </div>
+                <!--                <input type="file" name="file" id='i-file'  accept=".xls, .xlsx" onchange="$('#location').val($('#i-file').val());" style="display: none">-->
+                <input type="file" name="file" id='i-file' onchange="$('#location').val($('#i-file').val());"
+                       style="display: none">
+            </div>
+
+
+            <div class="forgot">
+                <input type="button" onclick="registerMerchant()" value="Register">
+            </div>
+        </form>
+    </div>
+    <div class="login-bottom">
+        <h3>search Index &nbsp;<a href="/merchant/login">Login</a>&nbsp Here</h3>
+    </div>
+</div>
+<div class="copyright">
+    <p>Copyright &copy; 2020.Company Raicho All rights reserved.<a target="_blank" href="http://raicho.com/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
+    </p>
+</div>
+
+<script>
+    function registerMerchant() {
+        var formData = new FormData(document.getElementById("tf"));
+        $.ajax({
+            url: "/merchant/register",
+            type: 'post',
+            data: formData,
+            processData: false, //告诉jQuery不要去处理发送的数据
+            contentType: false, //告诉jQuery不要去设置Content-Type请求头
+            success: function (res) {
+                alert(res);
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
