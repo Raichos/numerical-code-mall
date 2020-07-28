@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>商品信息</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="/layuiadmin/style/admin.css" media="all">
+
+  <link rel="stylesheet" href="/bootstrap-3.3.4/dist/css/bootstrap.css" media="all">
+  <script src="/jquery/jquery-1.11.0.min.js"></script>
+  <script src="/bootstrap-3.3.4/dist/js/bootstrap.js"></script>
+</head>
+<body>
+
+<div class="layui-fluid">
+  <div class="layui-card">
+    <div class="layui-card-body">
+      <table id="LAY-app-content-list" lay-filter="LAY-app-content-list" class="layui-table" style="width: 100%;">
+        <caption style="margin-bottom: 10px;">
+          <div class="layui-inline" style="float: left">
+            <div class="layui-input-inline">
+              <input type="text" name="title" placeholder="请输入商品名称" autocomplete="off" class="layui-input" style="height: 170px;height: 35px;">
+            </div>
+            <button class="layui-btn layui-btn-sm">搜&nbsp;&nbsp;&nbsp;索</button>
+          </div>
+          <div style="float: right">
+            <button class="layui-btn layui-btn-sm" data-toggle="modal" data-target="#addModel">添&nbsp;&nbsp;&nbsp;加</button>
+          </div>
+        </caption>
+        <thead>
+        <tr>
+          <th>商品id</th>
+          <th>名字</th>
+          <th>价格</th>
+          <th>数量</th>
+          <th>优惠</th>
+          <th>类别</th>
+          <th>图片</th>
+          <th>描述</th>
+          <th colspan="2">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <%
+        for (var i = 0; i < commodityList.length; i++) {
+
+        %>
+        <tr>
+          <td><%=commodityList[i]["g_id"]%></td>
+          <td><%=commodityList[i]["g_name"]%></td>
+          <td><%=commodityList[i]["g_price"]%></td>
+          <td><%=commodityList[i]["g_quantity"]%></td>
+          <td><%=commodityList[i]["g_discounts"]%></td>
+          <td><%=commodityList[i]["g_category"]%></td>
+          <td><%=commodityList[i]["g_photo"]%></td>
+          <td><%=commodityList[i]["g_description"]%></td>
+          <td>
+            <button class="layui-btn layui-btn-xs layui-btn-warm"  data-toggle="modal" data-target="#editModel"
+                    onclick="editCommodity('<%=commodityList[i]["g_id"]%>','<%=commodityList[i]["g_name"]%>','<%=commodityList[i]["g_price"]%>'
+                            ,'<%=commodityList[i]["g_quantity"]%>','<%=commodityList[i]["g_discounts"]%>','<%=commodityList[i]["g_category"]%>'
+                            ,'<%=commodityList[i]["g_photo"]%>','<%=commodityList[i]["g_description"]%>')">编辑</button>
+
+          </td>
+          <td>
+            <button class="layui-btn layui-btn-xs layui-btn-danger" onclick="deleteCommodity('<%=commodityList[i]["g_id"]%>')">删除</button>
+          </td>
+        </tr>
+        <%
+        }
+        %>
+        </tbody>
+
+      </table>
+
+
+      <script type="text/html" id="buttonTpl">
+        {{#  if(d.status){ }}
+        <button class="layui-btn layui-btn-xs">已发布</button>
+        {{#  } else { }}
+        <button class="layui-btn layui-btn-primary layui-btn-xs">待修改</button>
+        {{#  } }}
+      </script>
+      <script type="text/html" id="table-content-list">
+        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+      </script>
+    </div>
+  </div>
+</div>
+
+<script src="/layuiadmin/layui/layui.js"></script>
+</body>
+<!-- 添加模态框（Modal） -->
+<div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          &times;
+        </button>
+        <h4 class="modal-title" id="myModalLabel">
+          添加商品
+        </h4>
+      </div>
+      <div class="modal-body">
+        <!--                    在这里添加一些文本-->
+        <form class="form-horizontal" enctype="multipart/form-data" role="form" method="post" action="/merchant/commodity/add">
+          <div class="form-group">
+            <label for="firstname" class="col-sm-2 control-label">商品名称</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="firstname" name="commodity-name"
+                     placeholder="请输入商品名称">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lastname" class="col-sm-2 control-label">价格</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="lastname"
+                     placeholder="价格" name="price">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lastname" class="col-sm-2 control-label">数量</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="quantity"
+                     placeholder="数量" name="quantity">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lastname" class="col-sm-2 control-label">优惠</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="discounts"
+                     placeholder="优惠" name="discounts">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lastname" class="col-sm-2 control-label">类别</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="category" name="category"
+                     placeholder="类别">
+            </div>
+          </div>
+          <!--<div class="form-group">
+            <label for="lastname" class="col-sm-2 control-label">图片</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="photo"
+                     placeholder="图片">
+            </div>
+          </div>-->
+
+          <div class="form-group">
+            <label for="lastname" class="col-sm-2 control-label">描述</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="describe" name="describe"
+                     placeholder="描述">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="lastname" class="col-sm-2 control-label">图片</label>
+            <div class="col-sm-10">
+
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <div class="input-group">
+                    <input id='location' class="form-control" onclick="$('#i-file').click();">
+                    <label class="input-group-btn">
+                      <input type="button" id="i-check" value="浏览图片" class="btn btn-primary"
+                             onclick="$('#i-file').click();">
+                    </label>
+                  </div>
+                </div>
+                <!--                <input type="file" name="file" id='i-file'  accept=".xls, .xlsx" onchange="$('#location').val($('#i-file').val());" style="display: none">-->
+                <input type="file" name="file" id='i-file' onchange="$('#location').val($('#i-file').val());"
+                       style="display: none">
+              </div>
+            </div>
+          </div>
+
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+            </button>
+            <button type="submit" class="btn btn-primary">
+              添加
+            </button>
+          </div>
+        </form>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal -->
+</div>
+
+<!-- 编辑模态框（Modal） -->
+<div class="modal fade" id="editModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          &times;
+        </button>
+        <h4 class="modal-title" id="editModalLabel">
+          修改商品
+        </h4>
+      </div>
+      <div class="modal-body">
+        <!--                    在这里添加一些文本-->
+        <form class="form-horizontal" role="form" method="post" action="/merchant/commodity/editCommodity">
+          <input type="hidden" name="id" id="edit-id">
+          <div class="form-group">
+            <label for="firstname" class="col-sm-2 control-label">商品名称</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="edit-name" name="edit-name"
+                     placeholder="请输入商品名称">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lastname" class="col-sm-2 control-label">价格</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="edit-price" name="edit-price"
+                     placeholder="价格" onblur="checkValess()">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lastname" class="col-sm-2 control-label">数量</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="edit-quantity" name="edit-quantity"
+                     placeholder="数量">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lastname" class="col-sm-2 control-label">优惠</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="edit-discounts" name="edit-discounts"
+                     placeholder="优惠">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lastname" class="col-sm-2 control-label">类别</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="edit-category" name="edit-category"
+                     placeholder="类别">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lastname" class="col-sm-2 control-label">图片</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="edit-photo" name="edit-photo"
+                     placeholder="图片f">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lastname" class="col-sm-2 control-label">描述</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="edit-describe" name="edit-describe"
+                     placeholder="描述">
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+            </button>
+<!--            onclick="commitUpdateCommodity()"-->
+            <button type="submit" class="btn btn-primary">
+              提交更改
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal -->
+</div>
+<script>
+  function deleteCommodity(gid) {
+
+    // alert("name="+name);
+    $.post("/merchant/commodity/deleteCommodity",{gid:gid},function(result){
+      // alert("成功="+result)
+      window.location.href="http://localhost:3001/merchant/commodity"
+    });
+  }
+
+  function checkValess() {
+
+    var regex =  /^\d+$/;
+    var str = $("#edit-price").val();
+    // console.log("f="+regex.test(str));
+    // console.log("ff="+str);
+
+    if (!regex.test(str)){
+      alert("请输入正确值");
+    }
+
+  }
+
+  function editCommodity(g_id, g_name,g_price,g_quantity,g_discounts,g_category,g_photo,g_description) {
+    // var id = g_id;
+    // var name = g_name;
+    // var price = g_price;
+    // var quantity = g_quantity;
+    // var discounts = g_discounts;
+    // var category = g_category;
+    // var photo = g_photo;
+    // var description = g_description;
+
+
+
+    $("#edit-id").val(g_id);
+    $("#edit-name").val(g_name);
+    $("#edit-price").val(g_price);
+    $("#edit-quantity").val(g_quantity);
+    $("#edit-discounts").val(g_discounts);
+    $("#edit-category").val(g_category);
+    $("#edit-photo").val(g_photo);
+    $("#edit-describe").val(g_description);
+
+  }
+
+  function commitUpdateCommodity() {
+
+  }
+</script>
+</html>

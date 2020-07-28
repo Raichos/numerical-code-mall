@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>网上购物系统</title>
+    <link rel="stylesheet" href="/bootstrap-3.3.4/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/sub-menu.css">
+    <style>
+        .container {
+            background: cornsilk;
+        }
+
+        .row.row-search {
+            padding: 30px 0 50px 0;
+            background: #fff;
+        }
+
+        .form-control {
+            height: 47px;
+        }
+
+        .btn-search {
+            padding: 9px 26px;
+            background: #e4393c;
+            color: #fff;
+            font-size: 19px;
+        }
+
+        .btn-search:hover {
+            color: #fff;
+            background-color: #f66060;
+        }
+
+        .goodslist div img {
+            width: 100%;
+        }
+
+        .goodslist div p {
+            text-align: center;
+            margin: 5px 0;
+            color: #4d4d4d;
+        }
+    </style>
+</head>
+<body>
+<!--顶部导航-->
+<div id="top-part"></div>
+<!-- Static navbar -->
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">商城</span>
+            </button>
+            <a class="navbar-brand" href="/user/index">数码商城</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/user/index">首页</a></li>
+                <li class="active"><a href="/user/order">我的订单</a></li>
+                <li><a href="/user/userinfo">个人中心</a></li>
+                <li><a href="/user/collectGoods">商品收藏</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right hidden-sm">
+                <%
+                if (user){
+                %>
+                    <li><a href="/user/login/logout">退出</a></li>
+                <%
+                }
+                else {
+                %>
+                    <li><a href="/user/login">登录</a></li>
+                <%
+                }
+                %>
+                <li><a href="/user/register">注册</a></li>
+                <li>
+                    <a href="/user/cart"><span class="glyphicon glyphicon-shopping-cart">购物车</span></a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+<!--主体内容-->
+<div class="container">
+    <!--第一块，search模块-->
+    <div class="row row-search">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-5">
+            <div class="input-group">
+                <input type="text" class="form-control" id="searchCommodity" autofocus placeholder="Search for...">
+                <span class="input-group-btn">
+                    <button class="btn btn-search" onclick="javascript:window.location.href='/user/search/searchGoods/'+document.getElementById('searchCommodity').value;" type="button">搜索</button>
+                  </span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" style="height: 43px;line-height: 43px;color: #fff;font-size: 16px; background: #f66060">
+            相关商品：
+        </div>
+    </div>
+    <div class="row goodslist">
+        <%
+        for (var i = 0; i < goods.length; i++) {
+        %>
+            <div class="col-md-3">
+                <a href="/user/commodity/info/<%=goods[i]['g_id']%>">
+                    <img src="<%=goods[i]['g_photo']%>" alt="">
+                    <p><%=goods[i]["g_name"]%></p>
+                    <p>￥<%=goods[i]["g_price"]%>元</p>
+                </a>
+            </div>
+        <%
+        }
+        %>
+        <!--<div class="col-md-3" >
+            <a href="#">
+                <img src="/images/5.jpg" alt="">
+                <p>海澜之家夏季v领纯色修身t恤</p>
+                <p>￥99</p>
+            </a>
+        </div>
+        <div class="col-md-3" >
+            <a href="#">
+                <img src="/images/5.jpg" alt="">
+                <p>海澜之家夏季v领纯色修身t恤</p>
+                <p>￥99</p>
+            </a>
+        </div>
+        <div class="col-md-3" >
+            <a href="#">
+                <img src="/images/5.jpg" alt="">
+                <p>海澜之家夏季v领纯色修身t恤</p>
+                <p>￥99</p>
+            </a>
+        </div>
+        <div class="col-md-3" >
+            <a href="#">
+                <img src="/images/5.jpg" alt="">
+                <p>海澜之家夏季v领纯色修身t恤</p>
+                <p>￥99</p>
+            </a>
+        </div>
+        <div class="col-md-3" >
+            <a href="#">
+                <img src="/images/5.jpg" alt="">
+                <p>海澜之家夏季v领纯色修身t恤</p>
+                <p>￥99</p>
+            </a>
+        </div>
+        <div class="col-md-3" >
+            <a href="#">
+                <img src="/images/5.jpg" alt="">
+                <p>海澜之家夏季v领纯色修身t恤</p>
+                <p>￥99</p>
+            </a>-->
+    </div>
+</div>
+</div>
+
+</body>
+<script src="/js/jquery-1.11.0.min.js"></script>
+<script src="/bootstrap-3.3.4/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    $("#top-part").load("top-part.html");
+</script>
+
+</html>

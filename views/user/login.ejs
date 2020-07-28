@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="/bootstrap-3.3.4/dist/css/bootstrap.min.css"/>
+    <script src="/jquery/jquery-1.11.0.min.js"></script>
+    <script src="/bootstrap-3.3.4/dist/js/bootstrap.min.js"></script>
+    <title></title>
+    <style>
+        .container {
+            background: cornsilk;
+        }
+
+        .row {
+            margin-left: 20px;
+            margin-right: 20px;;
+        }
+    </style>
+</head>
+<body>
+<!-- Static navbar -->
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">商城</span>
+            </button>
+            <a class="navbar-brand" href="/user/index">数码商城</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/user/index">首页</a></li>
+                <li><a href="/user/order">我的订单</a></li>
+                <li><a href="/user/userinfo">个人中心</a></li>
+                <li><a href="/user/collectGoods">商品收藏</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right hidden-sm">
+                <li class="active"><a href="/user/login">登录</a></li>
+                <li><a href="/user/register">注册</a></li>
+                <li>
+                    <a href="/user/cart"><span class="glyphicon glyphicon-shopping-cart">购物车</span></a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+<!--content-->
+<div class="container">
+    <div class="row thumbnail center">
+        <div class="col-sm-12">
+            <h1 class="text-center" style="margin-bottom: 30px">用户登录</h1>
+        </div>
+        <div class="col-sm-6">
+            <form class="form-horizontal caption" method="post" action="/user/login">
+                <div class="form-group">
+                    <label for="username" class="col-sm-3 control-label">用户名</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="用户名">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-sm-3 control-label">密码</label>
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="密码">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox">记住我
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-5">
+                        <button type="submit" class="btn btn-success btn-block">登录</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-6">
+            <div class="caption">
+                <h3>免责声明</h3>
+                <p>
+                    本网站所提供的信息，只供参考之用。
+                    本网站及其雇员一概毋须以任何方式就任何信息传递或传送的失误、不准确或错误对用户或任何其他人士负任何直接或间接的责任。
+                    在法律允许的范围内，本网站在此声明,不承担用户或任何人士就使用或未能使用本网站所提供的信息或任何链接或项目所引致的任何直接、间接、附带、从属、特殊、惩罚性或惩戒性的损害赔偿（包括但不限于收益、预期利润的损失或失去的业务、未实现预期的节省）。
+                    本网站所提供的信息，若在任何司法管辖地区供任何人士使用或分发给任何人士时会违反该司法管辖地区的法律或条例的规定或会导致本网站或其第三方代理人受限于该司法管辖地区内的任何监管规定时，则该等信息不宜在该司法管辖地区供该等任何人士使用或分发给该等任何人士。用户须自行保证不会受限于任何限制或禁止用户使用或分发本网站所提供信息的当地的规定。
+                    本网站图片，文字之类版权申明，因为网站可以由注册用户自行上传图片或文字，本网站无法鉴别所上传图片或文字的知识版权，如果侵犯，请及时通知我们，本网站将在第一时间及时删除。
+                    凡以任何方式登陆本网站或直接、间接使用本网站资料者，视为自愿接受本网站声明的约束。
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--footer-->
+<div class="navbar navbar-default navbar-static-bottom">
+    Copyright&copy;广州科技有限公司 by Raicho
+</div>
+</body>
+</html>

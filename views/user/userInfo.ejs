@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="/bootstrap-3.3.4/dist/css/bootstrap.min.css"/>
+    <script src="/jquery/jquery-1.11.0.min.js"></script>
+    <script src="/bootstrap-3.3.4/dist/js/bootstrap.min.js"></script>
+    <title></title>
+    <style>
+
+        .container {
+            background: cornsilk;
+        }
+
+        .row {
+            margin-left: 20px;
+            margin-right: 20px;;
+        }
+
+        .line-center {
+            line-height: 50px;
+            text-align: center;
+        }
+
+        .row input {
+            width: 50px;
+        }
+
+        .list-group-item:hover {
+            background: #27ae60;
+
+        }
+
+        .list-group-item div:first-child:hover {
+
+            cursor: pointer;
+        }
+
+        th {
+            text-align: right;
+            width: 10%;;
+            padding: 10px;
+        }
+
+        td {
+            text-align: left;
+            width: 30%;;
+            padding: 10px;
+        }
+
+        .table th {
+            text-align: center;
+        }
+
+        .table td {
+            text-align: center;
+        }
+    </style>
+    <script>
+        function myClick(n) {
+            location.href = "OrderInfo.html";
+        }
+
+        function btnClick() {
+            alert("btn");
+            return false;
+        }
+
+        $(function () {
+
+        })
+    </script>
+    <script>
+        $(function () {
+            $('#myTabs a').click(function (e) {
+
+                $(this).tab('show')
+            });
+        })
+    </script>
+</head>
+<body>
+<!-- Static navbar -->
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">商城</span>
+            </button>
+            <a class="navbar-brand" href="/user/index">数码商城</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/user/index">首页</a></li>
+                <li><a href="/user/order">我的订单</a></li>
+                <li class="active"><a href="/user/userinfo">个人中心</a></li>
+                <li><a href="/user/collectGoods">商品收藏</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right hidden-sm">
+                <%
+                if (user){
+                %>
+                    <li><a href="/user/login/logout">退出</a></li>
+                <%
+                }
+                else {
+                %>
+                    <li><a href="/user/login">登录</a></li>
+                <%
+                }
+                %>
+                <li><a href="/user/register">注册</a></li>
+                <li>
+                    <a href="/user/cart"><span class="glyphicon glyphicon-shopping-cart">购物车</span></a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+<!--content-->
+<div class="container">
+    <div class="row thumbnail center col-sm-12">
+        <div class="col-sm-12">
+            <h1 class="text-center" style="margin-bottom: 30px">个人中心</h1>
+        </div>
+
+        <ul class="nav nav-tabs nav-justified" id="myTabs">
+            <li class="active"><a href="#userHome">个人中心</a></li>
+            <!--            <li><a href="#editInfo">信息修改</a></li>-->
+            <li><a href="#editPassword">密码修改</a></li>
+            <li><a href="#recharge">充值提现</a></li>
+            <!--            <li><a href="#orderManager">订单管理</a></li>-->
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content" style="padding-top: 10px;border-top: #ff720f 2px solid">
+            <div role="tabpanel" class="tab-pane active" id="userHome">
+                <!--                个人中心-->
+                <form class="form-horizontal" role="form" style="padding-left: 150px;" method="post"
+                      action="/user/userinfo/updateUserInfo">
+                    <div style="float: left; width: 50%;">
+                        <div class="form-group">
+                            <label for="firstname" class="col-sm-2 control-label">用户名</label>
+                            <div class="col-sm-10">
+                                <input disabled type="text" value="<%= userName %>" name="user-name"
+                                       class="form-control" id="user-name" style="width: 200px;"
+                                       placeholder="用户名">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="firstname" class="col-sm-2 control-label">昵称</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="nick-name" class="form-control"
+                                       value="<%= userInfo['nickname'] %>" id="nick-name" style="width: 200px;"
+                                       placeholder="昵称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="firstname" class="col-sm-2 control-label">真实名</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="real-name" value="<%= userInfo['real_name'] %>"
+                                       class="form-control" id="real-name" style="width: 200px;"
+                                       placeholder="真实名">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="firstname" class="col-sm-2 control-label">余额</label>
+                            <div class="col-sm-10">
+                                <input type="text" disabled name="money" value="<%= userInfo['money'] %>"
+                                       class="form-control" id="money" style="width: 200px;"
+                                       placeholder="余额">
+                            </div>
+                        </div>
+                    </div>
+                    <div style="float: left; width: 50%">
+                        <div class="form-group">
+                            <label for="firstname" class="col-sm-2 control-label">性别</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="gender" value="<%= userInfo['gender'] %>" class="form-control"
+                                       id="gender" style="width: 200px;"
+                                       placeholder="性别">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="firstname" class="col-sm-2 control-label">电话</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="phone" value="<%= userInfo['phone'] %>" class="form-control"
+                                       id="phone" style="width: 200px;"
+                                       placeholder="电话">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="firstname" class="col-sm-2 control-label">邮箱</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="email" value="<%= userInfo['email'] %>" class="form-control"
+                                       id="email" style="width: 200px;"
+                                       placeholder="邮箱">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="firstname" class="col-sm-2 control-label">地址</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="address" value="<%= userInfo['address'] %>"
+                                       class="form-control" id="address" style="width: 200px;"
+                                       placeholder="地址">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" onclick="updateUserInfo()" class="btn btn-info" style="margin-left: 350px">
+                        确认修改
+                    </button>
+                </form>
+            </div>
+            <!--            <div role="tabpanel" class="tab-pane" id="editInfo">信息修改</div>-->
+            <div role="tabpanel" class="tab-pane" id="editPassword">
+                <!--                密码修改-->
+                <form class="form-horizontal" role="form" style="padding-left: 350px">
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-2 control-label">原密码</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="before-password" style="width: 200px;"
+                                   placeholder="原密码">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-2 control-label">新密码</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="new-password" style="width: 200px;"
+                                   placeholder="新密码">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-2 control-label">确认密码</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="confirm-password" style="width: 200px;"
+                                   placeholder="确认密码">
+                        </div>
+                    </div>
+                    <button type="button" onclick="updatePassword()" class="btn btn-info" style="margin-left: 180px">
+                        确认修改
+                    </button>
+                </form>
+            </div>
+            <!--            <div role="tabpanel" class="tab-pane" id="orderManager">订单管理</div>-->
+            <div role="tabpanel" class="tab-pane" id="recharge">
+                <form class="form-horizontal" role="form" style="padding-left: 150px;" method="post"
+                      action="/user/userinfo/recharge">
+                    <div style="float: left; width: 50%;">
+                        <div class="form-group">
+                            <label for="firstname" class="col-sm-2 control-label">充值金额</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="user-name"
+                                       class="form-control" id="rechargeD" style="width: 200px;"
+                                       placeholder="充值金额">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="button" onclick="rechargeF()" class="btn btn-info" style="margin-left: 150px">
+                                确认充值
+                            </button>
+                        </div>
+                    </div>
+                    <div style="float: left; width: 50%">
+                        <div class="form-group">
+                            <label for="firstname" class="col-sm-2 control-label">提现金额</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="gender" class="form-control"
+                                       id="withdrawD" style="width: 200px;"
+                                       placeholder="提现金额">
+                            </div>
+                        </div>
+                        <button type="button" onclick="withdrawF()" class="btn btn-info" style="margin-left: 150px">
+                            确认提现
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function updateUserInfo() {
+
+        $.post("/user/userinfo/updateUserInfo", {
+                nickname: $("#nick-name").val(),
+                realname: $("#real-name").val(),
+                gender: $("#gender").val(),
+                phone: $("#phone").val(),
+                email: $("#email").val(),
+                address: $("#address").val()
+            },
+            function (result) {
+                alert(result)
+                // window.location.href = "/user/userInfo"
+            });
+    }
+
+    function updatePassword() {
+
+        var newpassword = $("#new-password").val();
+        var confirmpassword = $("#confirm-password").val()
+
+        if (newpassword !== confirmpassword) {
+            alert("密码不一致");
+            return;
+        }
+
+        $.post("/user/userinfo/updatePassword", {
+                beforepassword: $("#before-password").val(),
+                newpassword: $("#new-password").val()
+            },
+            function (result) {
+                alert(result)
+            });
+    }
+
+    function rechargeF() {
+
+        var recharge = $("#rechargeD").val();
+        // console.log("ddd="+recharge)
+        $.post("/user/userinfo/recharge", {recharges: recharge}, function (result) {
+            alert(result)
+        });
+    }
+
+
+    function withdrawF() {
+        var withdraws = $("#withdrawD").val();
+        // console.log("ddd="+withdraws)
+        $.post("/user/userinfo/withdraw", {withdraws: withdraws}, function (result) {
+            alert(result)
+        });
+    }
+</script>
+<!--footer-->
+<div class="navbar navbar-default navbar-static-bottom"
+     style="position:fixed; left:0px; bottom:0px; width:100%; height:50px; background-color: #ffe2a2; z-index:9999;">
+    Copyright&copy;广州科技有限公司 by Raicho
+</div>
+</body>
+</html>
+

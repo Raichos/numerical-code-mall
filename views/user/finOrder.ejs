@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>网上购物系统</title>
+    <link rel="stylesheet" href="/bootstrap-3.3.4/dist/css/bootstrap.min.css">
+    <style>
+        .container {
+            background: cornsilk;
+            /*height: 600px;*/
+            /*height: calc(100vh);*/
+        }
+        .top-parta{
+            height: calc(10vh);
+        }
+        .mainbody{
+            height: calc(85vh);
+        }
+        img{
+            width: 100%;
+        }
+        ul{
+            border: 0;
+        }
+        .tick{
+            text-align: center;
+        }
+        .tickimg{
+            width: 60px;
+            border-radius: 50%;
+            height: 57px;
+            background-color: #0BB20C;
+            margin: 20px auto 10px ;
+            position: relative;
+        }
+        .tickimg:after{
+            position: absolute;
+            content: '7';
+            font-size: 48px;
+            font-weight: bold;
+            color: #fff;
+            top: -6px;
+            left: 22px;
+            transform: rotateZ(-300deg) rotateX(-180deg) ;
+            -webkit-transform:rotateZ(-300deg) rotateX(-180deg);
+        }
+        p{
+            margin: 10px 0;
+        }
+        .mark{
+            font-size: 16px;
+            color: #808080;
+            padding: .2em 0;
+        }
+        .des-label{
+            width: 100px;
+            text-align: right;
+            font-size: 16px;
+            font-weight: bolder;
+            color: #808080;
+            display: inline-block;
+        }
+        .list-group-item{
+            border: 0;
+        }
+
+    </style>
+</head>
+<body>
+<!--顶部导航-->
+<!--<div id="top-part"></div>-->
+<!-- Static navbar -->
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container top-parta">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">商城</span>
+            </button>
+            <a class="navbar-brand" href="/user/index">数码商城</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/user/index">首页</a></li>
+                <li><a href="/user/order">我的订单</a></li>
+                <li><a href="/user/userinfo">个人中心</a></li>
+                <li><a href="/user/collectGoods">商品收藏</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right hidden-sm">
+                <%
+                if (user){
+                %>
+                    <li><a href="/user/login/logout">退出</a></li>
+                <%
+                }
+                else {
+                %>
+                    <li><a href="/user/login">登录</a></li>
+                <%
+                }
+                %>
+                <li><a href="/user/register">注册</a></li>
+                <li>
+                    <a href="/user/cart"><span class="glyphicon glyphicon-shopping-cart">购物车</span></a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+<!--主体内容-->
+<div class="container mainbody">
+    <div class="row">
+        <div class="col-md-offset-2 col-sm-7">
+            <div class="tick">
+                <div class="tickimg"></div>
+                <p>购买成功</p>
+            </div>
+            <ul  style="margin-top: 10px" class="list-group">
+                <li class="list-group-item">
+                    <p  class="mark">
+                        <span  class="des-label">当前用户：</span>
+                        <span><%=user["user_name"]%></span>
+                    </p>
+                    <p>
+                        <span class="des-label">订单号：</span>
+                        <span><%=order["o_number"]%></span>
+                    </p>
+                    <p>
+                        <span class="des-label">订单数量：</span>
+                        <span><%=order["o_quantity"]%></span>
+                    </p>
+                    <p>
+                        <span class="des-label">订单总额：</span>
+                        <span><%=order["o_total_price"]%>元</span>
+                    </p>
+                </li>
+            </ul>
+            <button type="button" class="btn btn-default col-sm-offset-2 col-sm-3" onclick="window.location.href='/user/order/info/<%=order["id"]%>'">查看订单</button>
+            <button type="button" class="btn btn-success col-sm-offset-1 col-sm-3" onclick="window.location.href='/user/index'">继续购物</button>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="/jquery/jquery-1.11.0.min.js"></script>
+<script src="/bootstrap-3.3.4/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    $("#top-part").load("top-part.html");
+</script>
+</html>

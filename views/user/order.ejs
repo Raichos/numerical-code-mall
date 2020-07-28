@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="/bootstrap-3.3.4/dist/css/bootstrap.min.css"/>
+    <script src="/jquery/jquery-1.11.0.min.js"></script>
+    <script src="/bootstrap-3.3.4/dist/js/bootstrap.min.js"></script>
+    <title></title>
+    <style>
+
+        .container {
+            background: cornsilk;
+        }
+
+        .carousel {
+            position: relative;
+            width: auto;
+            display: inline-block;
+        }
+
+        .row {
+            margin-left: 20px;
+            margin-right: 20px;;
+        }
+
+        .line-center {
+            line-height: 50px;
+            text-align: center;
+        }
+
+        .row input {
+            width: 50px;
+        }
+
+        .list-group-item:hover {
+            /*background: #27ae60;*/
+            background: #c7ffa6;
+
+        }
+
+        .list-group-item div:first-child:hover {
+
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function myClick(id) {
+            location.href = "/user/order/info/" + id;
+        }
+
+        function btnClick() {
+            alert("btn");
+            return false;
+        }
+
+        $(function () {
+
+        })
+    </script>
+</head>
+<body>
+<!-- Static navbar -->
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">商城</span>
+            </button>
+            <a class="navbar-brand" href="/user/index">数码商城</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/user/index">首页</a></li>
+                <li class="active"><a href="/user/order">我的订单</a></li>
+                <li><a href="/user/userinfo">个人中心</a></li>
+                <li><a href="/user/collectGoods">商品收藏</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right hidden-sm">
+                <%
+                if (user){
+                %>
+                    <li><a href="/user/login/logout">退出</a></li>
+                <%
+                }
+                else {
+                %>
+                    <li><a href="/user/login">登录</a></li>
+                <%
+                }
+                %>
+                <li><a href="/user/register">注册</a></li>
+                <li>
+                    <a href="/user/cart"><span class="glyphicon glyphicon-shopping-cart">购物车</span></a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+<!--content-->
+<div class="container">
+    <div class="row thumbnail center">
+        <div class="col-sm-12">
+            <h1 class="text-center" style="margin-bottom: 30px">我的订单</h1>
+        </div>
+        <div class="col-sm-12 thumbnail">
+            <div class="col-sm-3 line-center">订单编号</div>
+            <div class="col-sm-2 line-center">订单状态</div>
+            <div class="col-sm-2 line-center">商品数量</div>
+            <div class="col-sm-2 line-center">订单总价</div>
+            <div class="col-sm-3 line-center">操作</div>
+        </div>
+        <div class="list-group">
+            <%
+            for (var i = 0; i < orders.length; i++) {
+            %>
+                <div class="col-sm-12  list-group-item">
+                    <div class="col-sm-3 line-center"
+                         onclick="myClick(<%= orders[i]['id'] %>)"><%= orders[i]["o_number"] %></div>
+                    <div class="col-sm-2 line-center"><%= orders[i]["o_status"] %></div>
+                    <div class="col-sm-2 line-center"><%= orders[i]["o_quantity"] %></div>
+                    <div class="col-sm-2 line-center"><%= orders[i]["o_total_price"] %>元</div>
+                    <div class="col-sm-3 line-center">
+                        <button class="btn btn-danger" onclick="deleteOrder(<%= orders[i]['id'] %>)">删除订单</button>
+                        <%
+                        if (orders[i]["o_status"] === "未付款"){
+                        %>
+                            <button class="btn btn-info" onclick="payment(<%= orders[i]['id'] %>)">确认付款</button>
+                        <%
+                        } else {
+
+                        %>
+                            <button class="btn btn-success" onclick="myClick(<%= orders[i]['id'] %>)">查看详情</button>
+                        <%
+                        }
+                        %>
+                    </div>
+                </div>
+            <%
+            }
+            %>
+
+        </div>
+    </div>
+
+
+    <!--footer-->
+    <div class="navbar navbar-default navbar-static-bottom">
+        Copyright&copy;广州科技有限公司 by Raicho
+    </div>
+</div>
+<script type="text/javascript">
+    function payment(orderId) {
+        $.post("/user/order/payment", {orderId: orderId}, function (data, status) {
+            // alert("data="+data);
+
+            if (data === "success"){
+                alert("支付成功");
+                window.location.href = "/user/order";
+                return;
+            }
+            alert(data);
+        });
+    }
+    function deleteOrder(orderId) {
+        // console.log("orderId="+orderId);
+        /*$.ajax({
+            type: "POST",
+            url: "/user/order/deleteOrder",
+            data: {
+                orderId: orderId
+            },
+            dataType: "JSON",
+            success: function(result) {}
+        });*/
+        $.post("/user/order/deleteOrder", {orderId: orderId}, function (data, status) {
+            // alert("data="+data);
+
+            window.location.href = "/user/order";
+        });
+    }
+</script>
+</body>
+</html>
